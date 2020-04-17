@@ -159,7 +159,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //delete
-
     public void deleteBabyItem(BabyItems babyItems){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         sqLiteDatabase.delete(Util.TABLE_NAME,
@@ -172,7 +171,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //get count of total entries
     public int getCount(){
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase =  getReadableDatabase();
         String COUNT_QUERY = "SELECT * FROM "+Util.TABLE_NAME;
         Cursor cursor = sqLiteDatabase.rawQuery(COUNT_QUERY,null);
 

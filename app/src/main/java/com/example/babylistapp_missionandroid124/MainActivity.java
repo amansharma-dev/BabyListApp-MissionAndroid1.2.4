@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.babylistapp_missionandroid124.Data.DatabaseHandler;
+import com.example.babylistapp_missionandroid124.Model.BabyItems;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button saveBtn;
     private CardView cardView;
 
+    private DatabaseHandler databaseHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FloatingActionButton floatingActionButton = findViewById(R.id.fab);
 
-
+        databaseHandler = new DatabaseHandler(MainActivity.this);
 
 
         floatingActionButton.setOnClickListener(this);
@@ -62,7 +66,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.saveButton_Button:
 
-                saveBabyDetails();
+                if (!babyItemName.getText().toString().isEmpty()
+                && !quantity.getText().toString().isEmpty()
+                && !color.getText().toString().isEmpty()
+                && !size.getText().toString().isEmpty()){
+
+                    saveBabyDetails(view);
+                }
+                else{
+                    Snackbar.make(view,"Enter Details",Snackbar.LENGTH_LONG)
+                            .setAction("Action",null)
+                            .show();
+                }
 
                 break;
 
@@ -110,9 +125,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();//show
     }
 
-    private void saveBabyDetails(){
+    public void saveBabyDetails(View view){
 
         //Todo: save each baby item in a Database
         //Todo: move to next Screen - baby Items/ details screen.
+
+        String baby_ItemName = babyItemName.getText().toString().trim();
+        int baby_quantity = Integer.parseInt(quantity.getText().toString().trim());
+        String baby_color = color.getText().toString().trim();
+        int baby_size = Integer.parseInt(size.getText().toString().trim());
+
+
+        BabyItems babyItems = new BabyItems();
+        babyItems.setItemName(baby_ItemName);
+        babyItems.setQuantity(baby_quantity);
+        babyItems.setColor(baby_color);
+        babyItems.setSize(baby_size);
+
+        databaseHandler.addBabyItem(babyItems);
+
+        //snackbar is attached to a view thats why passing View view in save()
+        Snackbar.make(view,"Baby item saved",Snackbar.LENGTH_SHORT)
+                .setAction("Action",null).show();
+
     }
 }
