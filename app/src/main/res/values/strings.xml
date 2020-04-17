@@ -9,4 +9,10 @@
     <string name="update_button">update button</string>
     <string name="delete_button">delete button</string>
     <string name="action_setting">Setting</string>
+    <string name="enter_details">Enter Details</string>
+    <string name="enter_baby_item_name">Enter Baby Item Name</string>
+    <string name="enter_quantity">Enter Quantity</string>
+    <string name="enter_color">Enter Color</string>
+    <string name="enter_size">Enter Size</string>
+    <string name="save">Save</string>
 </resources>
