@@ -60,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        .show();
                 break;
 
+            case R.id.saveButton_Button:
+
+                saveBabyDetails();
+
+                break;
+
         }
     }
 
@@ -94,8 +100,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         saveBtn = view.findViewById(R.id.saveButton_Button);
         cardView = view.findViewById(R.id.popup_cardView);
         cardView.setCardBackgroundColor(this.getResources().getColor(R.color.colorCard));
+
+        saveBtn = view.findViewById(R.id.saveButton_Button);
+
+        saveBtn.setOnClickListener(this);
+
         builder.setView(view);
         alertDialog = builder.create();//creating dialog object
         alertDialog.show();//show
+    }
+
+    private void saveBabyDetails(){
+
+        //Todo: save each baby item in a Database
+        //Todo: move to next Screen - baby Items/ details screen.
     }
 }

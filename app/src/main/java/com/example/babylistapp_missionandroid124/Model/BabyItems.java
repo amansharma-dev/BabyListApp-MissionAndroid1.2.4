@@ -3,15 +3,15 @@ package com.example.babylistapp_missionandroid124.Model;
 public class BabyItems {
     private int id;
     private String itemName;
-    private String quantity;
+    private int quantity;
     private String color;
-    private String size;
+    private int size;
     private String dateAddedOn;
 
     public BabyItems() {
     }
 
-    public BabyItems(String itemName, String quantity, String color, String size, String dateAddedOn) {
+    public BabyItems(String itemName, int quantity, String color, int size, String dateAddedOn) {
         this.itemName = itemName;
         this.quantity = quantity;
         this.color = color;
@@ -19,7 +19,7 @@ public class BabyItems {
         this.dateAddedOn = dateAddedOn;
     }
 
-    public BabyItems(int id, String itemName, String quantity, String color, String size, String dateAddedOn) {
+    public BabyItems(int id, String itemName, int quantity, String color, int size, String dateAddedOn) {
         this.id = id;
         this.itemName = itemName;
         this.quantity = quantity;
@@ -44,11 +44,11 @@ public class BabyItems {
         this.itemName = itemName;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -60,11 +60,11 @@ public class BabyItems {
         this.color = color;
     }
 
-    public String getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(int size) {
         this.size = size;
     }
 

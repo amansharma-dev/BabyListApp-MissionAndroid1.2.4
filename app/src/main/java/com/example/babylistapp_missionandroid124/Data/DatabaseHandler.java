@@ -12,7 +12,9 @@ import com.example.babylistapp_missionandroid124.Model.BabyItems;
 import com.example.babylistapp_missionandroid124.R;
 import com.example.babylistapp_missionandroid124.Util.Util;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -29,21 +31,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_TABLE = "CREATE TABLE "+ Util.TABLE_NAME +"("
                 + Util.COLUMN_ID+" INTEGER PRIMARY KEY,"
                 + Util.COLUMN_ITEM_NAME+" TEXT,"
-                + Util.COLUMN_QUANTITY+ " TEXT,"
+                + Util.COLUMN_QUANTITY+ " INTEGER,"
                 + Util.COLUMN_COLOR +" TEXT,"
-                + Util.COLUMN_SIZE + " TEXT,"
-                + Util.COLUMN_DATE_ADDED_ON + " TEXT" +")";
+                + Util.COLUMN_SIZE + " INTEGER,"
+                + Util.COLUMN_DATE_ADDED_ON + " LONG" +")";
 
         sqLiteDatabase.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        String DORP_TABLE = String.valueOf((R.string.drop_table));
-        sqLiteDatabase.execSQL(DORP_TABLE,new String[]{Util.DATABASE_NAME});
+        String DROP_TABLE = String.valueOf((R.string.drop_table));
+        sqLiteDatabase.execSQL(DROP_TABLE,new String[]{Util.DATABASE_NAME});
 
-        //close connection
-        sqLiteDatabase.close();
+        //create database
+        onCreate(sqLiteDatabase);
     }
 
     //Crud- create, read, update, delete
@@ -53,14 +55,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Util.COLUMN_ID,babyItems.getId());
+
         contentValues.put(Util.COLUMN_ITEM_NAME,babyItems.getItemName());
         contentValues.put(Util.COLUMN_COLOR,babyItems.getColor());
         contentValues.put(Util.COLUMN_SIZE,babyItems.getSize());
-        contentValues.put(Util.COLUMN_DATE_ADDED_ON,babyItems.getDateAddedOn());
+        contentValues.put(Util.COLUMN_DATE_ADDED_ON,java.lang.System.currentTimeMillis());//current time stamp of system
 
         sqLiteDatabase.insert(Util.TABLE_NAME,null,contentValues);
 
+        //close connection
         sqLiteDatabase.close();
     }
 
@@ -68,7 +71,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public BabyItems getSingleBabyItem(int id){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(Util.TABLE_NAME,
-                new String[]{Util.COLUMN_ID},
+                new String[]{
+                        Util.COLUMN_ID,
+                        Util.COLUMN_ITEM_NAME,
+                        Util.COLUMN_QUANTITY,
+                        Util.COLUMN_COLOR,
+                        Util.COLUMN_SIZE,
+                        Util.COLUMN_DATE_ADDED_ON
+                },
                 Util.COLUMN_ID+"=?",
                 new String[]{String.valueOf(id)},
                 null,null,null);
@@ -76,12 +86,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if(cursor!=null)
             cursor.moveToFirst();
             BabyItems babyItems = new BabyItems();
-            babyItems.setId(Integer.parseInt(cursor.getString(0)));
-            babyItems.setItemName(cursor.getString(1));
-            babyItems.setQuantity(cursor.getString(2));
-            babyItems.setColor(cursor.getString(3));
-            babyItems.setSize(cursor.getString(4));
-            babyItems.setDateAddedOn(cursor.getString(5));
+        if (cursor != null) {
+            babyItems.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ID))));
+            babyItems.setItemName(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ITEM_NAME)));
+            babyItems.setQuantity(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_QUANTITY))));
+            babyItems.setColor(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR)));
+            babyItems.setSize(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR))));
+
+            //convert time to something readable
+            DateFormat dateFormat = DateFormat.getDateInstance();
+            String formattedDate = dateFormat.format(new Date(cursor.getLong(cursor.getColumnIndex(Util.COLUMN_DATE_ADDED_ON)))
+                    .getTime()); //April 18,2020
+
+            babyItems.setDateAddedOn(formattedDate);
+
+        }
             return babyItems;
     }
 
@@ -91,16 +110,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<BabyItems> babyItemsList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String GET_ALL_ENTRIES = "SELECT * FROM "+ Util.TABLE_NAME;
-        Cursor cursor = sqLiteDatabase.rawQuery(GET_ALL_ENTRIES,null);
+        Cursor cursor = sqLiteDatabase.query(Util.TABLE_NAME,
+                new String[]{
+                        Util.COLUMN_ID,
+                        Util.COLUMN_ITEM_NAME,
+                        Util.COLUMN_QUANTITY,
+                        Util.COLUMN_COLOR,
+                        Util.COLUMN_SIZE,
+                        Util.COLUMN_DATE_ADDED_ON
+                },
+                null,null,
+                null,null,
+                Util.COLUMN_DATE_ADDED_ON+" DESC");
         if (cursor.moveToFirst()){
             do {
                 BabyItems babyItems = new BabyItems();
-                babyItems.setId(Integer.parseInt(cursor.getString(0)));
-                babyItems.setItemName(cursor.getString(1));
-                babyItems.setQuantity(cursor.getString(2));
-                babyItems.setColor(cursor.getString(3));
-                babyItems.setSize(cursor.getString(4));
-                babyItems.setDateAddedOn(cursor.getString(5));
+                babyItems.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ID))));
+                babyItems.setItemName(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ITEM_NAME)));
+                babyItems.setQuantity(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_QUANTITY))));
+                babyItems.setColor(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR)));
+                babyItems.setSize(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR))));
+
+                //convert time to something readable
+                DateFormat dateFormat = DateFormat.getDateInstance();
+                String formattedDate = dateFormat.format(new Date(cursor.getLong(cursor.getColumnIndex(Util.COLUMN_DATE_ADDED_ON)))
+                        .getTime()); //April 18,2020
+
+                babyItems.setDateAddedOn(formattedDate);
+
                 babyItemsList.add(babyItems);
             }while (cursor.moveToNext());
         }
@@ -108,7 +145,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //update
-
     public int updateBabyItem(BabyItems babyItems){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
