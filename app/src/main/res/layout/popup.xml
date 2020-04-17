@@ -64,7 +64,7 @@
                 android:textSize="18sp"
                 android:textColorHint="@color/colorBackground_Text"
                 android:hint="@string/enter_color"
-                android:inputType="number"
+                android:inputType="text"
                 android:autofillHints="no"
                 />
 

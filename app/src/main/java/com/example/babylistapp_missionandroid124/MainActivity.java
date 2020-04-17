@@ -72,9 +72,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 && !size.getText().toString().isEmpty()){
 
                     saveBabyDetails(view);
+
+
                 }
                 else{
-                    Snackbar.make(view,"Enter Details",Snackbar.LENGTH_LONG)
+
+                    Snackbar.make(view,"NOT SAVED, ENTER DETAILS",Snackbar.LENGTH_LONG)
+                            .setTextColor(getResources().getColor(R.color.colorButtonDelete))
                             .setAction("Action",null)
                             .show();
                 }
