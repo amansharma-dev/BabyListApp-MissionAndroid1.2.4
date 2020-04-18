@@ -6,6 +6,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/confirm_cardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,8 +18,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorCard">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/confirmation_textView"

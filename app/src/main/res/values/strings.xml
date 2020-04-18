@@ -18,4 +18,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
+    <string name="edit_details">Edit Details</string>
+    <string name="update">Update</string>
 </resources>
