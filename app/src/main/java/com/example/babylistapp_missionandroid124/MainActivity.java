@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import com.example.babylistapp_missionandroid124.Data.DatabaseHandler;
 import com.example.babylistapp_missionandroid124.Model.BabyItems;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,7 +52,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         databaseHandler = new DatabaseHandler(MainActivity.this);
 
 
+        //get count
+
+        Log.d("CountData", "onCreate: "+databaseHandler.getCount());
+
+        //get All saved baby items
+        List<BabyItems> babyItemsList = databaseHandler.getAllBabyItems();
+        for (BabyItems babyItems : babyItemsList){
+
+            Log.d("SavedData", "onCreate: "+"Id: "+babyItems.getId()+", Item Name: "+babyItems.getItemName()+", Quantity: "+babyItems.getQuantity()+", Color: "+babyItems.getColor()+", Size: "+babyItems.getSize()+", Date Added On: "+babyItems.getDateAddedOn());
+        }
+
         floatingActionButton.setOnClickListener(this);
+
     }
 
 
@@ -73,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     saveBabyDetails(view);
 
+                    alertDialog.dismiss();
 
                 }
                 else{

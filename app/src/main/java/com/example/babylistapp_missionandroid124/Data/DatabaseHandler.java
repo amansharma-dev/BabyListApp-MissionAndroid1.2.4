@@ -57,6 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(Util.COLUMN_ITEM_NAME,babyItems.getItemName());
+        contentValues.put(Util.COLUMN_QUANTITY,babyItems.getQuantity());
         contentValues.put(Util.COLUMN_COLOR,babyItems.getColor());
         contentValues.put(Util.COLUMN_SIZE,babyItems.getSize());
         contentValues.put(Util.COLUMN_DATE_ADDED_ON,java.lang.System.currentTimeMillis());//current time stamp of system
@@ -89,9 +90,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null) {
             babyItems.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ID))));
             babyItems.setItemName(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ITEM_NAME)));
-            babyItems.setQuantity(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_QUANTITY))));
+            babyItems.setQuantity(cursor.getInt(cursor.getColumnIndex(Util.COLUMN_QUANTITY)));
             babyItems.setColor(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR)));
-            babyItems.setSize(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR))));
+            babyItems.setSize(cursor.getInt(cursor.getColumnIndex(Util.COLUMN_SIZE)));
 
             //convert time to something readable
             DateFormat dateFormat = DateFormat.getDateInstance();
@@ -107,9 +108,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //read-all-cursor-rawQuery
 
     public List<BabyItems> getAllBabyItems(){
-        List<BabyItems> babyItemsList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String GET_ALL_ENTRIES = "SELECT * FROM "+ Util.TABLE_NAME;
+
+        List<BabyItems> babyItemsList = new ArrayList<>();
+
         Cursor cursor = sqLiteDatabase.query(Util.TABLE_NAME,
                 new String[]{
                         Util.COLUMN_ID,
@@ -117,19 +119,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         Util.COLUMN_QUANTITY,
                         Util.COLUMN_COLOR,
                         Util.COLUMN_SIZE,
-                        Util.COLUMN_DATE_ADDED_ON
-                },
+                        Util.COLUMN_DATE_ADDED_ON},
                 null,null,
                 null,null,
-                Util.COLUMN_DATE_ADDED_ON+" DESC");
+                Util.COLUMN_DATE_ADDED_ON + " DESC");
         if (cursor.moveToFirst()){
             do {
                 BabyItems babyItems = new BabyItems();
+
                 babyItems.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ID))));
                 babyItems.setItemName(cursor.getString(cursor.getColumnIndex(Util.COLUMN_ITEM_NAME)));
-                babyItems.setQuantity(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_QUANTITY))));
+                babyItems.setQuantity(cursor.getInt(cursor.getColumnIndex(Util.COLUMN_QUANTITY)));
                 babyItems.setColor(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR)));
-                babyItems.setSize(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Util.COLUMN_COLOR))));
+                babyItems.setSize(cursor.getInt(cursor.getColumnIndex(Util.COLUMN_SIZE)));
 
                 //convert time to something readable
                 DateFormat dateFormat = DateFormat.getDateInstance();
