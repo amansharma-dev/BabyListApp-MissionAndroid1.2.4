@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -88,7 +90,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     saveBabyDetails(view);
 
-                    alertDialog.dismiss();
+                    //Todo: post delay in dialog dismiss
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            alertDialog.dismiss();
+                            //Todo: move to next screen - details screen
+                            Intent intent = new Intent(MainActivity.this,BabyItemsListActivity.class);
+                            startActivity(intent);
+                        }
+                    }, 1200);
+
 
                 }
                 else{
