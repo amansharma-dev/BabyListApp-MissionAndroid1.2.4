@@ -37,10 +37,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         BabyItems babyItems = babyItemsList.get(position);
+
         holder.item.setText(babyItems.getItemName());
-        holder.quantity.setText(babyItems.getQuantity());
+        holder.quantity.setText(String.valueOf(babyItems.getQuantity()));
         holder.color.setText(babyItems.getColor());
-        holder.size.setText(babyItems.getSize());
+        holder.size.setText(String.valueOf(babyItems.getSize()));
         holder.dateAddedOn.setText(babyItems.getDateAddedOn());
         holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.colorCard));
     }
@@ -65,11 +66,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            item = itemView.findViewById(R.id.item_textView);
-            quantity = itemView.findViewById(R.id.quantity_textView);
-            color = itemView.findViewById(R.id.color_textView);
-            size = itemView.findViewById(R.id.size_textView);
-            dateAddedOn = itemView.findViewById(R.id.dateAddedOn_textView);
+            item = itemView.findViewById(R.id.babyItemListRow_textView);
+            quantity = itemView.findViewById(R.id.quantityListRow_textView);
+            color = itemView.findViewById(R.id.colorListRow_textView);
+            size = itemView.findViewById(R.id.sizeListRow_textView);
+            dateAddedOn = itemView.findViewById(R.id.dateAddedOnListRow_textView);
             updateImgBtn = itemView.findViewById(R.id.update_imageButton);
             deleteImgBtn = itemView.findViewById(R.id.delete_imageButton);
             cardView= itemView.findViewById(R.id.cardViewBabyItem_cardView);

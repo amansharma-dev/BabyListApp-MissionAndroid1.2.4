@@ -94,7 +94,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/item_textView"
+                    android:id="@+id/babyItemListRow_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="normal"
@@ -104,7 +104,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/quantity_textView"
+                    android:id="@+id/quantityListRow_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="normal"
@@ -115,7 +115,7 @@
                     android:text=""/>
 
                 <TextView
-                    android:id="@+id/color_textView"
+                    android:id="@+id/colorListRow_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="normal"
@@ -124,7 +124,7 @@
                     android:text=""/>
 
                 <TextView
-                    android:id="@+id/size_textView"
+                    android:id="@+id/sizeListRow_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="normal"
@@ -135,7 +135,7 @@
                     android:text=""/>
 
                 <TextView
-                    android:id="@+id/dateAddedOn_textView"
+                    android:id="@+id/dateAddedOnListRow_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="normal"
