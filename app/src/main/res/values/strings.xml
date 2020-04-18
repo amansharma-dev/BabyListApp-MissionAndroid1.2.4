@@ -15,4 +15,7 @@
     <string name="enter_color">Enter Color</string>
     <string name="enter_size">Enter Size</string>
     <string name="save">Save</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete?</string>
 </resources>

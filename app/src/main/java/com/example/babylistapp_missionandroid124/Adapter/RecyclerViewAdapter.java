@@ -1,9 +1,11 @@
 package com.example.babylistapp_missionandroid124.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -24,6 +26,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<BabyItems> babyItemsList;
     private int position;
 
+    //confirm dialog delete
+    private AlertDialog.Builder builder;
+    private AlertDialog alertDialog;
+    private LayoutInflater layoutInflater;
 
     public RecyclerViewAdapter(Context context, List<BabyItems> babyItemsList) {
         this.context = context;
@@ -98,11 +104,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         }
 
-        private void deleteItem(int id){
-            DatabaseHandler databaseHandler = new DatabaseHandler(context);
-            databaseHandler.deleteBabyItem(id);
-            babyItemsList.remove(getAdapterPosition());
-            notifyItemRemoved(getAdapterPosition());
+        private void deleteItem(final int id){
+
+            builder = new AlertDialog.Builder(context);
+            View view = LayoutInflater.from(context).inflate(R.layout.delete_confirmation_alertdialog,null);
+            Button noButton = view.findViewById(R.id.confirmNo_button);
+            Button yesButton = view.findViewById(R.id.confirmYes_button);
+
+            builder.setView(view);
+            alertDialog = builder.create();
+            alertDialog.show();
+
+            noButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+            yesButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DatabaseHandler databaseHandler = new DatabaseHandler(context);
+                    databaseHandler.deleteBabyItem(id);
+                    babyItemsList.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    alertDialog.dismiss();
+                }
+            });
+
+
         }
 
     }
