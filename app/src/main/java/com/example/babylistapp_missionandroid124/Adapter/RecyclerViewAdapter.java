@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.babylistapp_missionandroid124.Data.DatabaseHandler;
 import com.example.babylistapp_missionandroid124.Model.BabyItems;
 import com.example.babylistapp_missionandroid124.R;
 
@@ -21,6 +22,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private Context context;
     private List<BabyItems> babyItemsList;
+    private int position;
+
 
     public RecyclerViewAdapter(Context context, List<BabyItems> babyItemsList) {
         this.context = context;
@@ -81,14 +84,26 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         @Override
         public void onClick(View view) {
             switch (view.getId()){
+
+
                 case R.id.update_imageButton:
 
                     break;
 
                 case R.id.delete_imageButton:
-
+                    position = getAdapterPosition();
+                    BabyItems  babyItems = babyItemsList.get(position);
+                    deleteItem(babyItems.getId());
                     break;
             }
         }
+
+        private void deleteItem(int id){
+            DatabaseHandler databaseHandler = new DatabaseHandler(context);
+            databaseHandler.deleteBabyItem(id);
+            babyItemsList.remove(getAdapterPosition());
+            notifyItemRemoved(getAdapterPosition());
+        }
+
     }
 }

@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
 
+        byPassActivty();
 
         //get count
 
@@ -181,5 +182,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Snackbar.make(view,"Baby item saved",Snackbar.LENGTH_SHORT)
                 .setAction("Action",null).show();
 
+    }
+
+    private void byPassActivty(){
+        if(databaseHandler.getCount()>0){
+            Intent intent = new Intent(MainActivity.this, BabyItemsListActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

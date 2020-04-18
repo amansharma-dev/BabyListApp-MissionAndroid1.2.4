@@ -161,11 +161,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //delete
-    public void deleteBabyItem(BabyItems babyItems){
+    public void deleteBabyItem(int id){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         sqLiteDatabase.delete(Util.TABLE_NAME,
                 Util.COLUMN_ID+"=?",
-                new String[]{String.valueOf(babyItems.getId())});
+                new String[]{String.valueOf(id)});
 
         //close connection
         sqLiteDatabase.close();
